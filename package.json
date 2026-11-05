@@ -1,0 +1,29 @@
+{
+  "name": "vibers-ai",
+  "version": "3.0.0",
+  "description": "Vibers AI — Ko'p API Kalitlar Havzasi va Failover tizimiga ega universal AI agent",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "models": "node list_models.js"
+  },
+  "keywords": [
+    "ai-agent",
+    "gemini",
+    "groq",
+    "openai",
+    "multi-api-key",
+    "load-balancer",
+    "uzbekistan"
+  ],
+  "author": "Vibers AI",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.9",
+    "express": "^4.19.2"
+  }
+}
