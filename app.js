@@ -116,9 +116,9 @@ function getCurrentMessages() {
 // ==========================================
 async function callAIStream(prompt, conversationHistory, onChunk) {
   // file:// orqali ochilgan bo'lsa ham localhost:3000 ga murojaat qiladi
-  const base = (window.location.protocol === 'file:' || !window.location.port && window.location.hostname === 'localhost')
-    ? 'http://localhost:3000'
-    : '';
+ const base = window.location.hostname.endsWith('github.io')
+    ? 'https://SIZNING-NOM.onrender.com'
+    : (window.location.protocol === 'file:' ? 'http://localhost:3000' : '');
 
   const res = await fetch(base + '/api/chat/stream', {
     method: 'POST',
