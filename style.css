@@ -1,0 +1,1480 @@
+/* ==========================================================================
+   ZIYO AI AGENT - STIL TIZIMI (DESIGN SYSTEM)
+   Ilhomlantiruvchi manbalar: shaxzodbekbaxtiyorov.uz va yusupovjavohirbek.netlify.app
+   Uslub: Editorial Elegance + Zamonaviy Dark/Light + Terracotta Aktsent
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Yorug' rejim (Light Theme - Shaxzodbek & Yusupov iliq qog'oz uslubi) */
+  --bg: #FAF9F5;
+  --bg-alt: #F2EFE8;
+  --card: #FFFFFF;
+  --card-alt: #F7F5EE;
+  --ink: #1F1D1A;
+  --ink-secondary: #4A463F;
+  --muted: #7A756B;
+  --line: #E5E0D3;
+  --line-strong: #D1CAB8;
+  
+  /* Imzo rang: Terrakotta / Issiq mis / Qahrabo */
+  --accent: #B5532F;
+  --accent-hover: #9E4424;
+  --accent-soft: #F9EBE5;
+  --accent-border: #ECC5B5;
+  
+  /* Status ranglari */
+  --green: #2B7A54;
+  --green-soft: #E5F3EB;
+  --amber: #B07218;
+  --amber-soft: #FAF0D8;
+  --red: #C53B3B;
+  --red-soft: #FBEAEA;
+  --blue: #2378B5;
+  --blue-soft: #E4F1FA;
+  
+  /* Soyalar va effektlar */
+  --shadow-sm: 0 1px 3px rgba(35, 30, 20, 0.05);
+  --shadow-md: 0 4px 14px rgba(35, 30, 20, 0.08);
+  --shadow-lg: 0 12px 32px rgba(35, 30, 20, 0.12);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 9999px;
+  
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  color-scheme: light;
+}
+
+/* Qorong'u rejim (Dark Theme - Chuqur obsidian kofe uslubi) */
+:root[data-theme="dark"] {
+  --bg: #141311;
+  --bg-alt: #1B1917;
+  --card: #201D1A;
+  --card-alt: #262320;
+  --ink: #F5EFE6;
+  --ink-secondary: #D4CBC0;
+  --muted: #9E9486;
+  --line: #332E28;
+  --line-strong: #453E37;
+  
+  --accent: #E08A6B;
+  --accent-hover: #F09E80;
+  --accent-soft: #38251B;
+  --accent-border: #5A3928;
+  
+  --green: #5BB985;
+  --green-soft: #172D21;
+  --amber: #E2AD4E;
+  --amber-soft: #332713;
+  --red: #E25E5E;
+  --red-soft: #381A1A;
+  --blue: #59A8E2;
+  --blue-soft: #162738;
+  
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.65);
+  
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   BAZA STILI
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ser {
+  font-family: var(--font-serif);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Scrollbar dizayni */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* ==========================================================================
+   ASOSIY LAYOUT (Desktop: 280px Yon Menyu + Markaziy Chat + O'ng Panel)
+   ========================================================================== */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   CHAP YON MENYU (SIDEBAR)
+   ========================================================================== */
+.sidebar {
+  width: 290px;
+  min-width: 290px;
+  background-color: var(--bg-alt);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 20px;
+  overflow-y: auto;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 50;
+}
+
+/* Brend logotipi */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+}
+
+.brand-avatar-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-avatar-ring::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px dashed var(--accent);
+  animation: spinSlow 30s linear infinite;
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 18px;
+  position: relative;
+  z-index: 2;
+}
+
+.brand-text h1 {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.brand-text h1 span {
+  color: var(--accent);
+}
+
+.brand-badge {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 2px;
+}
+
+/* Yangi Chat tugmasi */
+.btn-new-chat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  background-color: var(--accent);
+  color: #FFFFFF;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(181, 83, 47, 0.25);
+  transition: all 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.btn-new-chat:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(181, 83, 47, 0.35);
+}
+
+.btn-new-chat svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Navigatsiya bo'limi */
+.nav-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 16px 0 8px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-secondary);
+  font-size: 13.5px;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background-color: var(--card);
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+.nav-item.active {
+  background-color: var(--card);
+  color: var(--accent);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background-color: var(--accent);
+  border-radius: 0 2px 2px 0;
+}
+
+.nav-item svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.8;
+}
+
+.nav-item .badge-count {
+  margin-left: auto;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Sessiyalar ro'yxati (Chat tarixi) */
+.history-list {
+  max-height: 170px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.history-item:hover {
+  background: var(--card);
+  color: var(--ink);
+}
+
+.history-item.active {
+  background: var(--card);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.history-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.history-del-btn {
+  opacity: 0;
+  padding: 2px;
+  color: var(--muted);
+  transition: opacity 0.2s;
+}
+
+.history-item:hover .history-del-btn {
+  opacity: 1;
+}
+
+.history-del-btn:hover {
+  color: var(--red);
+}
+
+/* Sidebar pastki qismi: API Pool statusi va mavzu */
+.sidebar-footer {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* API Key Pool Mini-vidjet */
+.pool-status-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pool-status-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.pool-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pool-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--green-soft);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(43, 122, 84, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(43, 122, 84, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(43, 122, 84, 0); }
+}
+
+.pool-summary-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.pool-subtext {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Pastki qator: Foydalanuvchi + Mavzu tugmasi */
+.footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.theme-toggle-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ==========================================================================
+   MARKAZIY CHAT BO'LIMI (MAIN CHAT AREA)
+   ========================================================================== */
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  background-color: var(--bg);
+  overflow: hidden;
+}
+
+/* Chat tepa paneli (Header) */
+.chat-header {
+  height: 64px;
+  min-height: 64px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 10;
+}
+
+.chat-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-menu-btn {
+  display: none;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+}
+
+.agent-header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.agent-avatar-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: 1px solid var(--accent-border);
+}
+
+.agent-meta h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.agent-meta .agent-model-tag {
+  font-size: 11.5px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.agent-meta .agent-model-tag span.badge-pill {
+  background: var(--card-alt);
+  border: 1px solid var(--line);
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+
+.chat-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  border: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--ink-secondary);
+  transition: all 0.15s ease;
+}
+
+.header-action-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.header-action-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Xabarlar lentasi (Message Stream) */
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.messages-inner {
+  max-width: 820px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Xush kelibsiz banneri (Editorial Hero) */
+.welcome-hero {
+  text-align: left;
+  padding: 36px 32px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.welcome-hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.welcome-number {
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.welcome-hero h1 {
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.welcome-hero h1 i {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.welcome-hero p {
+  color: var(--ink-secondary);
+  font-size: 14.5px;
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Tezkor takliflar paneli */
+.quick-prompts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.quick-prompt-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-prompt-card:hover {
+  background: var(--card);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.quick-prompt-card .prompt-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quick-prompt-card .prompt-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   XABAR BUBBLELARI (MESSAGES)
+   ========================================================================== */
+.message-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.message-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.message-row.user .message-avatar {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.message-row.assistant .message-avatar {
+  background: var(--card);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.message-content-wrap {
+  flex: 1;
+  max-width: calc(100% - 48px);
+}
+
+.message-header-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.message-sender {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.message-time {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.key-badge-used {
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  background: var(--card-alt);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+}
+
+.message-bubble {
+  color: var(--ink);
+  font-size: 14.5px;
+  line-height: 1.65;
+  word-break: break-word;
+}
+
+.message-row.user .message-bubble {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 4px 14px 14px 14px;
+  padding: 12px 16px;
+  display: inline-block;
+  box-shadow: var(--shadow-sm);
+}
+
+.message-row.assistant .message-bubble {
+  padding: 4px 0;
+}
+
+/* Agent Fikrlash Jarayoni (Thinking Accordion) */
+.agent-thinking-box {
+  background: var(--card-alt);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+}
+
+.thinking-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.thinking-summary span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.thinking-body {
+  margin-top: 8px;
+  color: var(--ink-secondary);
+  font-size: 12.5px;
+  line-height: 1.55;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  white-space: pre-line;
+}
+
+/* Markdown formatlash */
+.message-bubble p {
+  margin-bottom: 10px;
+}
+.message-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.message-bubble ul, .message-bubble ol {
+  margin: 8px 0 12px 20px;
+}
+
+.message-bubble li {
+  margin-bottom: 4px;
+}
+
+.message-bubble strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.message-bubble a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Kod bloklari (Code Blocks & Artifacts) */
+.code-block-wrapper {
+  margin: 14px 0;
+  background: #191816;
+  border: 1px solid #332E28;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 14px;
+  background: #141311;
+  border-bottom: 1px solid #2B2620;
+  font-size: 12px;
+  color: #A09485;
+  font-family: var(--font-mono);
+}
+
+.code-lang-tag {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.code-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.code-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #D4CBC0;
+  font-size: 11.5px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: #24201C;
+  border: 1px solid #363028;
+  transition: all 0.15s ease;
+}
+
+.code-btn:hover {
+  background: #332E28;
+  color: #FFFFFF;
+}
+
+.code-block-wrapper pre {
+  padding: 14px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #E8E1D7;
+}
+
+/* Yuklanayotgan animatsiya (Typing Indicator) */
+.typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+.typing-dot:nth-child(3) { animation-delay: 0; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   INPUT BO'LIMI (MESSAGE INPUT BAR)
+   ========================================================================== */
+.chat-input-area {
+  padding: 16px 24px 20px;
+  background: var(--bg);
+  position: relative;
+  z-index: 10;
+}
+
+.chat-input-wrapper {
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 10px 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-input-wrapper:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 4px 18px rgba(181, 83, 47, 0.15);
+}
+
+/* Yuklangan fayllar chip paneli */
+.attached-files-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.file-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  font-size: 11.5px;
+  color: var(--ink-secondary);
+}
+
+.file-chip-remove {
+  color: var(--muted);
+  cursor: pointer;
+}
+.file-chip-remove:hover {
+  color: var(--red);
+}
+
+.chat-textarea {
+  width: 100%;
+  min-height: 44px;
+  max-height: 180px;
+  border: none;
+  background: transparent;
+  outline: none;
+  resize: none;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.chat-textarea::placeholder {
+  color: var(--muted);
+}
+
+/* Input asboblari paneli */
+.input-tools-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.input-tools-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tool-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--ink-secondary);
+  transition: all 0.15s ease;
+}
+
+.tool-toggle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tool-toggle-btn.active {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.tool-toggle-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.input-tools-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  transition: all 0.2s;
+}
+
+.voice-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.voice-btn.recording {
+  background: var(--red-soft);
+  color: var(--red);
+  border-color: var(--red);
+  animation: pulseRed 1.2s infinite;
+}
+
+@keyframes pulseRed {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--accent);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.send-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.send-btn:disabled {
+  background: var(--line);
+  color: var(--muted);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.send-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Pastki eslatma matni */
+.input-subtext {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* ==========================================================================
+   MODAL TIZIMI (API KEY POOL, AGENT SOZLAMALARI, KOD PREVIEW)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 16, 14, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 680px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(12px) scale(0.98);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.modal-overlay.active .modal-container {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-alt);
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-close-btn {
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s;
+}
+
+.modal-close-btn:hover {
+  color: var(--ink);
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  background: var(--bg-alt);
+}
+
+/* Tugmalar */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.btn-secondary:hover {
+  border-color: var(--line-strong);
+  background: var(--bg-alt);
+}
+
+.btn-danger {
+  background: var(--red);
+  color: #FFFFFF;
+}
+
+/* Forma elementlari */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.form-hint {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  outline: none;
+  font-size: 13.5px;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--accent);
+}
+
+/* ==========================================================================
+   API KEY POOL JADVALI VA BOSHQARUVI
+   ========================================================================== */
+.pool-strategy-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.strategy-option {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.strategy-option:hover {
+  border-color: var(--accent);
+}
+
+.strategy-option.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.strategy-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.strategy-desc {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.key-table-wrapper {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.key-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.key-table th {
+  background: var(--bg-alt);
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+
+.key-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-secondary);
+}
+
+.key-table tr:last-child td {
+  border-bottom: none;
+}
+
+.key-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.key-status-badge.active {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.key-status-badge.cooldown {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.key-status-badge.error {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+/* ==========================================================================
+   KODNI PREVIEW QILISH (SANDBOX MODAL)
+   ========================================================================== */
+.sandbox-preview-container {
+  width: 100%;
+  height: 480px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.sandbox-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ==========================================================================
+   MOBIL VA MOSLASHUVCHANLIK (RESPONSIVE)
+   ========================================================================== */
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .quick-prompts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pool-strategy-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .messages-container {
+    padding: 20px 16px;
+  }
+
+  .chat-input-area {
+    padding: 12px 16px 16px;
+  }
+}
